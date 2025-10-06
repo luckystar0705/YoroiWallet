@@ -1,0 +1,59 @@
+.wrapper {
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 12px;
+  color: var(--yoroi-palette-gray-600);
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--yoroi-palette-gray-900);
+  margin-right: 4px;
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.type {
+  color: var(--yoroi-palette-gray-600);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  padding-top: 1px;
+}
+
+.typeIcon {
+  margin-right: 6px;
+  width: 18px;
+  height: 18px;
+  margin-top: -1px;
+}
+
+.plate {
+  color: var(--yoroi-palette-gray-600);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+}

@@ -1,0 +1,245 @@
+@import '../../../themes/mixins/loading-spinner';
+
+.component {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+
+  .wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .formBody {
+    padding-bottom: 24px;
+    height: 100%;
+    overflow: auto;
+    .receiverInput {
+      position: relative;
+
+      :global {
+        .SimpleInput_input {
+          font-family: 'RobotoMono';
+          font-weight: 300;
+          letter-spacing: 0;
+        }
+      }
+    }
+
+    .memo {
+      margin-top: 20px;
+      .memoInput {
+        border-bottom: 1px solid #a7afc0;
+        input {
+          outline: none;
+          border: none;
+          padding: 10px 0px;
+          padding-bottom: 8px;
+          color: #242838;
+          font-family: Rubik;
+          font-size: 16px;
+          letter-spacing: 0;
+          line-height: 24px;
+          width: 100%;
+        }
+
+        input::placeholder {
+          color: #a7afc0;
+          font-family: Rubik;
+          font-size: 16px;
+          letter-spacing: 0;
+          line-height: 24px;
+        }
+      }
+
+      .memoWarning {
+        margin-top: 8px;
+        color: #6b7384;
+        font-family: Rubik;
+        font-size: 12px;
+        letter-spacing: 0;
+        line-height: 18px;
+      }
+
+      .hide {
+        visibility: hidden;
+      }
+
+      .memoError {
+        margin-top: 8px;
+        color: var(--yoroi-palette-error-100);
+        font-family: Rubik;
+        font-size: 12px;
+        letter-spacing: 0;
+        line-height: 18px;
+      }
+    }
+
+    .receiverStep {
+      width: 100%;
+      max-width: 506px;
+      margin: 0 auto;
+    }
+
+    .amountStep {
+      width: 560px;
+      margin: 0 auto;
+      position: relative;
+      padding-top: 7px;
+
+      .amountInput {
+        .defaultCoin {
+          color: #6b7384;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+          line-height: 22px;
+          margin-right: 12px;
+        }
+
+        .fiat {
+          margin: 16px 16px 0px 16px;
+          padding-top: 16px;
+          color: var(--yoroi-palette-gray-400);
+          font-size: 16px;
+          letter-spacing: 0;
+          border-top: 1px solid var(--yoroi-comp-input-text-disabled);
+        }
+
+        .amountError {
+          position: absolute;
+          bottom: -19px;
+          left: 17px;
+          color: var(--yoroi-palette-error-100);
+          font-size: 12px;
+          letter-spacing: 0.4px;
+          line-height: 16px;
+        }
+
+        .maxButtonSpinning {
+          @include loading-spinner('../../../assets/images/spinner-dark.svg', 25);
+        }
+
+        .maxBtn {
+          min-width: 51px;
+          min-height: 32px;
+          border: none;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+          border-radius: 8px;
+
+          &:disabled {
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .amountInputError {
+        border: 2px solid var(--yoroi-palette-error-100);
+      }
+
+      .disabled {
+        border: 1px solid var(--yoroi-comp-input-text-disabled);
+      }
+
+      .addButtonsWrapper {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .btnText {
+          margin-left: 8px;
+        }
+      }
+    }
+
+    // Preview Step styles
+    .receiver {
+      padding-top: 10px;
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 24px;
+      .receiverLabel {
+        color: #6b7384;
+      }
+      .receiverAddress {
+        color: #242838;
+      }
+    }
+
+    .infoWrapper {
+      padding: 40px 0px;
+      width: 60%;
+      .infoBlock {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: Rubik;
+        font-size: 16px;
+        letter-spacing: 0;
+        line-height: 24px;
+
+        .infoLabel {
+          color: #6b7384;
+        }
+
+        .infoAmount {
+          color: #242838;
+        }
+      }
+
+      .totalCard {
+        margin-top: 23px;
+        border-radius: 8px;
+        background-color: #3154cb;
+        padding: 29px 24px;
+        display: flex;
+        justify-content: space-between;
+        color: #ffffff;
+
+        .totalValues {
+          font-size: 20px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 28px;
+          text-align: right;
+        }
+
+        .label {
+          font-size: 16px;
+          letter-spacing: 0;
+          line-height: 22px;
+        }
+
+        .usd {
+          color: #ffffff;
+          font-family: Rubik;
+          font-size: 16px;
+          letter-spacing: 0;
+          line-height: 22px;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+:global(.YoroiRevamp) .component {
+  .wrapper {
+    border-radius: 8px;
+  }
+}
+
+:global(.YoroiModern) .component {
+  padding: 30px;
+
+  .receiverInput {
+    letter-spacing: 0;
+  }
+}

@@ -1,0 +1,96 @@
+// @flow
+import type { Node } from 'react';
+import { Component } from 'react';
+import { join } from 'lodash';
+import { observer } from 'mobx-react';
+import { IntlContext } from 'react-intl';
+import ReactToolboxMobxForm from '../../../utils/ReactToolboxMobxForm';
+import vjf from 'mobx-react-form/lib/validators/VJF';
+import globalMessages from '../../../i18n/global-messages';
+import config from '../../../config';
+import Autocomplete from '../../common/Autocomplete';
+
+type Props = {|
+  +setForm: ReactToolboxMobxForm => void,
+  +mnemonicValidator: string => boolean,
+  +validWords: Array<string>,
+  +mnemonicLength: void | number,
+|};
+
+@observer
+export default class MnemonicInput extends Component<Props> {
+
+  static contextType:any = IntlContext;
+  form: ReactToolboxMobxForm = new ReactToolboxMobxForm({
+    fields: {
+      recoveryPhrase: {
+        label: this.context.formatMessage(globalMessages.recoveryPhraseInputLabel),
+        placeholder: '',
+        value: [],
+        validators: [({ field }) => {
+          const value = join(field.value, ' ');
+          if (value === '') return [false, this.context.formatMessage(globalMessages.fieldIsRequired)];
+          if (this.props.mnemonicLength != null) {
+            const wordsLeft = this.props.mnemonicLength - field.value.length;
+            if (wordsLeft > 0) {
+              return [
+                false,
+                this.context.formatMessage(globalMessages.shortRecoveryPhrase,
+                  { number: wordsLeft })
+              ];
+            }
+          }
+          return [
+            this.props.mnemonicValidator(value),
+            this.context.formatMessage(globalMessages.invalidRecoveryPhrase)
+          ];
+        }],
+      },
+    },
+  }, {
+    options: {
+      validateOnChange: true,
+      validationDebounceWait: config.forms.FORM_VALIDATION_DEBOUNCE_WAIT,
+    },
+    plugins: {
+      vjf: vjf()
+    },
+  });
+
+  componentDidMount(): void {
+    this.props.setForm(this.form);
+  }
+
+  render(): Node {
+    const intl = this.context;
+    const { form } = this;
+    const {
+      validWords,
+      mnemonicLength,
+    } = this.props;
+
+    const recoveryPhraseField = form.$('recoveryPhrase');
+
+    return (
+      <Autocomplete
+        options={validWords}
+        maxSelections={mnemonicLength ?? config.wallets.MAX_RECOVERY_PHRASE_WORD_COUNT}
+        {...recoveryPhraseField.bind()}
+        done={recoveryPhraseField.isValid}
+        error={recoveryPhraseField.error}
+        maxVisibleOptions={5}
+        noResultsMessage={intl.formatMessage(globalMessages.recoveryPhraseNoResults)}
+        chipProps={{
+          sx: {
+            bgcolor: 'ds.primary_100',
+            color: 'ds.text_primary_medium',
+            ':hover': {
+              bgcolor: 'ds.primary_200',
+              color: 'ds.text_primary_max',
+            }
+          }
+        }}
+      />
+    );
+  }
+}

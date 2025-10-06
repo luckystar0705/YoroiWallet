@@ -1,0 +1,47 @@
+.component {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  .copyIconBig {
+    cursor: pointer;
+    object-fit: contain;
+    display: inline-flex;
+    margin-right: 2px;
+    margin-left: 16px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    & > svg {
+      display: block;
+      margin: auto;
+      height: 24px;
+      width: 24px;
+      path {
+        fill: var(--yoroi-palette-gray-900);
+      }
+    }
+  }
+
+}
+
+.componentDark {
+  background-color: var(--yoroi-palette-gray-50);
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+:global(.YoroiRevamp) {
+  .copyIconBig {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+    & > svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

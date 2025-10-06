@@ -1,0 +1,97 @@
+.component {
+  position: relative;
+
+  &.inactive {
+    &:hover {
+      input {
+        cursor: pointer;
+      }
+    }
+  }
+
+  // need this as Firefox disabled bubbling of click events on disabled inputs
+  input[disabled] {
+    pointer-events: none;
+  }
+
+  .button {
+    // top: 50%;
+    transform: translateY(-4px);
+    color: var(--yoroi-palette-gray-800);
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.38;
+    opacity: 0.5;
+    position: absolute;
+    right: 22px;
+    text-transform: lowercase;
+    &:hover {
+      opacity: 1;
+    }
+    &.error {
+      right: 50px;
+    }
+  }
+
+  @keyframes animateSavingResultLabel {
+    0% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .savingResultLabel {
+    animation: animateSavingResultLabel 3s;
+    color: var(--yoroi-palette-gray-600);
+    font-weight: 300;
+    font-size: 14px;
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    text-align: right;
+    top: 50%;
+    transform: translateY(-100%);
+  }
+}
+
+:global(.YoroiClassic) .component {
+  .button {
+    bottom: 35px;
+  }
+}
+
+:global(.YoroiModern),
+:global(.YoroiRevamp) {
+  .component {
+    .disabled {
+      background-color: transparent;
+    }
+
+    .button {
+      bottom: 37px;
+    }
+  }
+}
+
+:global(.YoroiRevamp) {
+  .component {
+    .error {
+      display: none;
+    }
+    .button {
+      top: 40%;
+    }
+
+    .savingResultLabel {
+      top: 33%;
+      right: 15px;
+      transform: unset;
+    }
+  }
+}

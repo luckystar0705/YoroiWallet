@@ -1,0 +1,136 @@
+// @flow
+import type { Node } from 'react';
+import { Component } from 'react';
+import type { WhitelistEntry } from '../../../../chrome/extension/connector/types';
+import { defineMessages, IntlContext } from 'react-intl';
+import type { TokenRow } from '../../../api/ada/lib/storage/database/primitives/tables';
+import type { TokenLookupKey } from '../../../api/common/lib/MultiToken';
+import { observer } from 'mobx-react';
+import { ReactComponent as NoDappsConnected } from '../../../assets/images/revamp/no-dapps-connected.inline.svg';
+import { connectorMessages } from '../../../i18n/global-messages';
+import WalletRowRevamp from './WalletRowRevamp';
+import { Box, Typography } from '@mui/material';
+import type { WalletState } from '../../../../chrome/extension/background/types';
+
+type Props = {|
+  +whitelistEntries: ?Array<WhitelistEntry>,
+  +activeSites: Array<string>,
+  +wallets: ?Array<WalletState>,
+  +onRemoveWallet: ({| url: ?string |}) => void,
+  +getTokenInfo: ($ReadOnly<Inexact<TokenLookupKey>>) => $ReadOnly<TokenRow>,
+  +shouldHideBalance: boolean,
+|};
+
+const messages = defineMessages({
+  connectedWallets: {
+    id: 'connector.connect.connectedWallets',
+    defaultMessage: '!!!Connected Wallets',
+  },
+  noWebsitesConnected: {
+    id: 'connector.connect.noWebsitesConnected',
+    defaultMessage: "!!!You don't have any websites connected yet",
+  },
+  connectedDapps: {
+    id: 'connector.connected-dapps.title',
+    defaultMessage: '!!!Connected DApps ({dappsCount})',
+  },
+  walletsLabel: {
+    id: 'connector.connected-dapps.walletsLabel',
+    defaultMessage: '!!!Wallets',
+  },
+  dappsLabel: {
+    id: 'connector.connected-dapps.dappsLabel',
+    defaultMessage: '!!!Dapps',
+  },
+  cardanoLabel: {
+    id: 'connector.connected-dapps.cardanoLabel',
+    defaultMessage: '!!!Cardano, ADA',
+  },
+});
+
+@observer
+export default class ConnectedWebsitesPage extends Component<Props> {
+  static contextType:any = IntlContext;
+  render(): Node {
+    const intl = this.context;
+    const genNoResult = () => (
+      <Box width="100%" height="100%" display="flex" alignItems="center" justifyContent="center">
+        <Box mt="-24px" display="flex" flexDirection="column" alignItems="center" gap="16px">
+          <NoDappsConnected />
+          <Box textAlign="center">
+            <Typography variant="h5" fontWeight={500} mb="8px" color="ds.text_gray_medium">
+              {intl.formatMessage(messages.noWebsitesConnected)}
+            </Typography>
+            <Typography variant="body1" color="ds.text_gray_low">
+              {intl.formatMessage(connectorMessages.messageReadOnly)}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    );
+
+    const { whitelistEntries, wallets } = this.props;
+    if (whitelistEntries == null || whitelistEntries.length === 0 || wallets == null || wallets.length === 0) {
+      return genNoResult();
+    }
+
+    const cardanoNodes = whitelistEntries
+      .map(({ url, publicDeriverId, image }, entryIndex) => {
+        const wallet = wallets.find(cacheEntry => cacheEntry.publicDeriverId === publicDeriverId);
+
+        if (wallet == null) return null;
+
+        return [
+          <WalletRowRevamp
+            key={url}
+            url={url}
+            websiteIcon={image}
+            onRemoveWallet={this.props.onRemoveWallet}
+            balance={wallet.balance}
+            plate={wallet.plate}
+            shouldHideBalance={this.props.shouldHideBalance}
+            getTokenInfo={this.props.getTokenInfo}
+            walletName={wallet.name}
+            id={'walletRow_' + entryIndex}
+          />,
+        ];
+      })
+      .reduce((acc, node) => {
+        if (node != null) acc.push(node);
+        return acc;
+      }, []);
+
+    if (cardanoNodes.length === 0) return genNoResult();
+
+    return (
+      <Box>
+        <Box mb="15px">
+          <Typography fontWeight={500} variant="h5" color="ds.text_gray_medium">
+            {intl.formatMessage(messages.connectedDapps, { dappsCount: cardanoNodes.length })}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            gap: '24px',
+            py: '12px',
+            pl: '8px',
+            alignItems: 'center',
+            borderBottom: '1px solid',
+            borderBottomColor: 'grayscale.200',
+            color: 'grayscale.600',
+          }}
+        >
+          <Box width="100%">
+            <Typography variant="body2">{intl.formatMessage(messages.walletsLabel)}</Typography>
+          </Box>
+          <Box width="100%">
+            <Typography variant="body2">{intl.formatMessage(messages.dappsLabel)}</Typography>
+          </Box>
+        </Box>
+        <Box>{cardanoNodes}</Box>
+      </Box>
+    );
+  }
+}

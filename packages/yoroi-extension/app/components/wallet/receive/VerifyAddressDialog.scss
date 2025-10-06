@@ -1,0 +1,32 @@
+@import '../../../themes/mixins/loading-spinner.scss';
+
+.processing {
+  @include loading-spinner('../../../assets/images/spinner-light.svg');
+}
+
+.label {
+  font-size: 14px;
+  line-height: 22px;
+  display: block;
+  font-weight: 400;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.derivation {
+  font-family: 'RobotoMono';
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.hash {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+:global(.YoroiModern) {
+  .component {
+    min-width: var(--yoroi-comp-dialog-min-width-lg);
+    max-width: var(--yoroi-comp-dialog-min-width-lg);
+  } 
+}

@@ -1,0 +1,78 @@
+@import '../../../themes/mixins/loading-spinner';
+
+.wrapper {
+  flex: 1;
+  display: flex;
+}
+
+.isLoading {
+  position: relative;
+  display: inline-block;
+  margin-left: 15px;
+  margin-bottom: 4px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.toggleButton {
+  margin-left: 8px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.afterDecimal {
+  color: var(--yoroi-palette-gray-900);
+  font-size: 10px;
+}
+
+.amount {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 22px;
+  color: var(--yoroi-palette-gray-900);
+
+  .isLoading {
+    margin-left: 9px;
+    margin-bottom: 8px;
+    @include loading-spinner('../../../assets/images/spinner-dark.svg', 14);
+  }
+
+  .isSyncing {
+    @extend .isLoading;
+    margin-bottom: 4px;
+  }
+
+  & + & {
+    margin-left: 24px;
+  }
+}
+
+.amountBold {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+
+  .afterDecimal {
+    font-size: 12px;
+  }
+}
+
+.amountLabel {
+  font-weight: 400;
+  display: block;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--yoroi-palette-gray-600);
+}
+
+.text {
+  font-size: 14px;
+  line-height: 22px;
+  margin-top: 2px;
+  color: var(--yoroi-palette-gray-600);
+}

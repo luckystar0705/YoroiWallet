@@ -1,0 +1,39 @@
+// @flow
+import type { Node } from 'react';
+import { Component } from 'react';
+import { observer } from 'mobx-react';
+import { IntlContext } from 'react-intl';
+import ReactToolboxMobxForm from '../../../utils/ReactToolboxMobxForm';
+import globalMessages from '../../../i18n/global-messages';
+import PasswordInput from './PasswordInput';
+
+type Props = {|
+  +setForm: ReactToolboxMobxForm => void,
+  +initValues?: string,
+  +isSubmitting: boolean,
+|};
+
+@observer
+export default class SpendingPasswordInput extends Component<Props> {
+  static defaultProps: {| initValues: void |} = {
+    initValues: undefined,
+  };
+
+  static contextType:any = IntlContext;
+  render(): Node {
+    const intl = this.context;
+
+    return (
+      <PasswordInput
+        setForm={this.props.setForm}
+        disabled={this.props.isSubmitting}
+        passwordMatches={_password => true}
+        fieldName="walletPassword"
+        validCheck={_password => true}
+        placeholder={intl.formatMessage(globalMessages.passwordLabel)}
+        allowEmptyInput={false}
+        initValues={this.props.initValues}
+      />
+    );
+  }
+}

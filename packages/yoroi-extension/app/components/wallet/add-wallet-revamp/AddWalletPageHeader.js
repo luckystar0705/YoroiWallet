@@ -1,0 +1,95 @@
+// @flow
+
+import { Component } from 'react';
+import type { Node } from 'react';
+import { ReactComponent as YoroiLogo } from '../../../assets/images/yoroi-logo-shape-blue.inline.svg';
+import { defineMessages, IntlContext } from 'react-intl';
+import { observer } from 'mobx-react';
+import { Typography, Box, Button, styled } from '@mui/material';
+import globalMessages from '../../../i18n/global-messages';
+import { ReactComponent as BackIcon } from '../../../assets/images/assets-page/backarrow.inline.svg';
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  '& svg': {
+    '& path': {
+      fill: theme.palette.ds.el_gray_medium,
+    },
+  },
+}));
+
+const LogoIconWrapper = styled(Box)(({ theme }) => ({
+  '& svg': {
+    '& defs': {
+      '& linearGradient': {
+        '& stop': {
+          'stop-color': theme.palette.ds.el_primary_medium,
+        }
+      }
+    },
+  },
+}));
+
+const messages: * = defineMessages({
+  backButtonLabel: {
+    id: 'wallet.add.page.revamp.backButtonLabel',
+    defaultMessage: '!!!Back to current wallet',
+  },
+});
+
+type Props = {|
+  +goToCurrentWallet: void => void,
+  +hasAnyWallets: boolean,
+|};
+
+@observer
+export default class AddWalletPageHeader extends Component<Props> {
+  static contextType:any = IntlContext;
+  render(): Node {
+    const intl = this.context;
+    const { goToCurrentWallet, hasAnyWallets } = this.props;
+
+    return (
+      <Box>
+        {hasAnyWallets && (
+          <Button
+            sx={{ color: 'ds.gray_900', fontSize: '14px' }}
+            startIcon={
+              <IconWrapper>
+                <BackIcon />
+              </IconWrapper>
+            }
+            onClick={goToCurrentWallet}
+          >
+            {intl.formatMessage(messages.backButtonLabel)}
+          </Button>
+        )}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <Box
+            sx={{
+              width: '56px',
+              height: '48px',
+              mb: '24px',
+            }}
+          >
+            <LogoIconWrapper>
+              <YoroiLogo />
+            </LogoIconWrapper>
+          </Box>
+          <Typography component="div" variant="h1" fontWeight={500} color="primary.600" mb="8px">
+            {intl.formatMessage(globalMessages.yoroi)}
+          </Typography>
+          <Typography component="div" variant="body1" fontWeight={500} color="primary.600">
+            {intl.formatMessage(globalMessages.yoroiIntro)}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
+}

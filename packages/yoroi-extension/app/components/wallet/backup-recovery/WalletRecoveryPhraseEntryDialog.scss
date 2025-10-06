@@ -1,0 +1,63 @@
+@import '../../../themes/mixins/loading-spinner';
+
+
+.component {
+  .checkbox {
+    margin-top: 30px;
+
+    & + .checkbox {
+      margin-top: 20px;
+    }
+  }
+
+  .words {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .phrasePlaceholder {
+    word-spacing: normal;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 1.57;
+    padding: 30px 20px;
+    color: var(--yoroi-instructions-text-color);
+  }
+
+  .phraseWrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .phraseWord {
+    background-color: var(--yoroi-mnemonic-background-color);
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 10px 10px 0;
+    height: 30px;
+    line-height: 26px;
+    padding: 3px 13px;
+    color: var(--yoroi-palette-gray-900);
+    border-radius: 8px;
+    letter-spacing: 0;
+  }
+
+  .isSubmitting {
+    @include loading-spinner("../../../assets/images/spinner-light.svg");
+  }
+}
+
+:global(.YoroiClassic) {
+  .component {
+    .words {
+      justify-content: space-between;
+    }
+  }
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+  .component {
+    text-align: left;
+  }
+}

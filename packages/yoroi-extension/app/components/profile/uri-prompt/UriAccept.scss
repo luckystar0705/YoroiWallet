@@ -1,0 +1,45 @@
+.component {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+  align-content: center;
+  overflow: auto;
+
+  .centeredBox {
+    width: 594px;
+    margin: 0 auto;
+  }
+
+  .explanation {
+    margin-bottom: 34px;
+    font-weight: 400;
+    color: var(--yoroi-palette-gray-800);
+    font-size: 14px;
+    line-height: 22px;
+    // align image with URI prompt page
+    margin-top: 90px;
+    margin-bottom: 55px;
+  }
+
+  .aboutSvg {
+    & > svg {
+      transform: scale(1.4, 1.4);
+      border: 1px solid var(--yoroi-palette-gray-200);
+      display: block;
+      margin: auto;
+      height: 128px;
+      width: 319px;
+      margin-bottom: 24px;
+      // align image with URI prompt page
+      margin-top: 75px;
+    }
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 34px;
+  }
+}

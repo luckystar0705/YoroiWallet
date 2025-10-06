@@ -1,0 +1,22 @@
+@import '../../../themes/mixins/underline';
+
+:global(.YoroiModern), :global(.YoroiRevamp)  {
+  .component {
+    min-width: var(--yoroi-comp-dialog-min-width-md);
+  } 
+}
+
+.component {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  a {
+    color: var(--yoroi-palette-gray-900);
+    @include underline(var(--yoroi-palette-gray-800));
+  }
+}

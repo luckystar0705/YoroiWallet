@@ -1,0 +1,44 @@
+// @flow
+import { Box, Typography, styled } from '@mui/material';
+import { ReactComponent as EditIcon } from '../../../../assets/images/revamp/icons/edit.inline.svg';
+import { InfoTooltip } from '../../../../components/widgets/InfoTooltip';
+import { useStrings } from '../../common/useStrings';
+
+type EditSlippageProps = {|
+  setOpenedDialog: (dialog: string) => void,
+  slippageValue: string,
+|};
+
+export const EditSlippage = ({ setOpenedDialog, slippageValue }: EditSlippageProps): React$Node => {
+  const { slippageTolerance, slippageToleranceTooltip } = useStrings();
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Box display="flex" gap="8px" alignItems="center">
+        <Typography component="div" variant="body1" color="ds.text_gray_medium">
+          {slippageTolerance}
+        </Typography>
+        <InfoTooltip content={slippageToleranceTooltip} />
+      </Box>
+      <IconWrapper onClick={setOpenedDialog} sx={{ cursor: 'pointer', display: 'flex', gap: '4px', alignItems: 'center' }}>
+        <Typography component="div" variant="body1" color="ds.text_gray_medium">
+          {slippageValue}%
+        </Typography>
+        <EditIcon />
+      </IconWrapper>
+    </Box>
+  );
+};
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  '& svg': {
+    '& path': {
+      fill: theme.palette.ds.el_gray_medium,
+    },
+  },
+}));

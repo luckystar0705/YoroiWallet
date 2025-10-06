@@ -1,0 +1,58 @@
+// @flow
+import { Component } from 'react';
+import type { Node } from 'react';
+import { observer } from 'mobx-react';
+import { defineMessages, IntlContext } from 'react-intl';
+
+import { ReactComponent as ExternalLinkSVG } from '../../../../assets/images/link-external.inline.svg';
+import styles from '../common/HelpLinkBlock.scss';
+import { Link, styled, Box } from '@mui/material';
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  marginRight: '8px',
+  marginLeft: '8px',
+  '& svg': {
+    '& path': {
+      fill: theme.palette.ds.el_gray_medium,
+    },
+  },
+}));
+
+const messages = defineMessages({
+  helpLinkYoroiWithLedger: {
+    id: 'wallet.connect.ledger.dialog.common.step.link.helpYoroiWithLedger_v2',
+    defaultMessage: '!!!https://emurgohelpdesk.zendesk.com/hc/en-us/articles/4415580907279',
+  },
+  helpLinkYoroiWithLedgerText: {
+    id: 'wallet.connect.ledger.dialog.common.step.link.helpYoroiWithLedger.text',
+    defaultMessage: '!!!Click here to know more about how to use Yoroi with Ledger.',
+  },
+});
+
+type Props = {|
+  +onExternalLinkClick: MouseEvent => void,
+|};
+
+@observer
+export default class HelpLinkBlock extends Component<Props> {
+  static contextType:any = IntlContext;
+  render(): Node {
+    const intl = this.context;
+    const { onExternalLinkClick } = this.props;
+
+    return (
+      <div className={styles.component}>
+        <Link
+          href={intl.formatMessage(messages.helpLinkYoroiWithLedger)}
+          onClick={event => onExternalLinkClick(event)}
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
+          {intl.formatMessage(messages.helpLinkYoroiWithLedgerText)}
+          <IconWrapper>
+            <ExternalLinkSVG />
+          </IconWrapper>
+        </Link>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,47 @@
+.component {
+  padding: 14px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.38;
+  word-spacing: 10px;
+  -webkit-user-select: none;
+  border: 1px solid var(--yoroi-palette-gray-600);
+
+  &.filled {
+    padding: 14px;
+    border: 2px solid var(--yoroi-palette-gray-700);
+    min-height: 132px;
+  }
+
+  &.phraseDoesNotMatch {
+    border: 1px solid var(--yoroi-palette-error-100);
+  }
+}
+
+.errorText {
+  color: var(--yoroi-comp-input-error);
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+:global(.YoroiClassic) {
+  .component {
+    border-radius: 2px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--yoroi-instructions-text-color);
+    background-color: var(--yoroi-backup-mnemonic-background-color);
+    min-height: 52px;
+  }
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+  .component {
+    border-radius: 8px;
+    text-align: left;
+    font-weight: 400;
+    color: var(--yoroi-palette-gray-900);
+  }
+}

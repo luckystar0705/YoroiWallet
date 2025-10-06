@@ -1,0 +1,72 @@
+// @flow
+import Dialog from '../../../components/widgets/Dialog';
+import { Typography, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import DialogCloseButton from '../../../components/widgets/DialogCloseButton';
+import { defineMessages, useIntl } from 'react-intl';
+
+import { ROUTES } from '../../../routes-config';
+import type { StoresProps } from '../../../stores';
+
+const messages = defineMessages({
+  title: {
+    id: 'governance.participateDialog.title',
+    defaultMessage: '!!!Withdraw warning',
+  },
+  contentInfo: {
+    id: 'governance.participateDialog.contentInfo',
+    defaultMessage:
+      '!!!To withdraw your rewards, you need to participate in the Cardano Governance. Your rewards will continue to accumulate, but you are only able to withdraw it once you join the Governance process.',
+  },
+  buttonText: {
+    id: 'governance.participateDialog.buttonText',
+    defaultMessage: '!!!Participate on governance',
+  },
+});
+
+type Props = {|
+  onClose: () => void,
+|};
+
+type AllProps = {| ...StoresProps, ...Props |};
+
+export const GovernanceParticipateDialog = ({ onClose, stores }: AllProps): React$Node => {
+  const intl = useIntl();
+  return (
+    <Dialog
+      onClose={onClose}
+      title={intl.formatMessage(messages.title)}
+      styleOverride={{ width: '648px', height: '240px', padding: 0 }}
+      styleContentOverride={{ padding: 0 }}
+      closeOnOverlayClick
+      closeButton={<DialogCloseButton />}
+    >
+      <Typography variant="body1" mb={2} mx="24px" color="ds.text_gray_medium">
+        {intl.formatMessage(messages.contentInfo)}
+      </Typography>
+
+      <CustomButton
+        variant="contained"
+        color="primary"
+        width="100%"
+        onClick={() => {
+          onClose();
+          stores.routing.goToRoute({
+            route: ROUTES.Governance.ROOT,
+          });
+        }}
+        sx={{ marginTop: '12px' }}
+      >
+        {intl.formatMessage(messages.buttonText)}
+      </CustomButton>
+    </Dialog>
+  );
+};
+
+const CustomButton = styled(Button)(({ _theme, _color }) => ({
+  width: '100%',
+  fontSize: '16px',
+  marginLeft: '24px',
+  marginRight: '24px',
+  maxWidth: '600px',
+}));

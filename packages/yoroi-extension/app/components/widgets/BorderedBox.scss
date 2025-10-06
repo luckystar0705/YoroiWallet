@@ -1,0 +1,14 @@
+.component {
+  padding: 20px;
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp)  {
+  .component {
+    border-radius: 8px;
+    padding: 30px;
+    
+    label {
+      background: var(--yoroi-palette-common-white);
+    }
+  } 
+}

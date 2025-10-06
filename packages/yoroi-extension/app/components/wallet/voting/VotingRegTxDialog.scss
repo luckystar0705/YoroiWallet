@@ -1,0 +1,58 @@
+@import './common.scss';
+@import '../../../themes/mixins/loading-spinner';
+@import '../../../themes/mixins/error-message';
+
+.dialog {
+  font-weight: 500;
+
+  .amountInput {
+    margin-top: 23px;
+  }
+
+  :global {
+    .Dialog_title {
+      margin-bottom: 24px;
+    }
+  }
+
+  .warningBox {
+    margin-bottom: 24px;
+  }
+
+  .submitButtonSpinning {
+    @include loading-spinner('../../../assets/images/spinner-light.svg');
+  }
+
+  .error {
+    @include error-message;
+    text-align: center;
+  }
+
+  .infoBlock {
+    background-color: var(--yoroi-palette-gray-50);
+    font-weight: 400;
+    padding: 10px;
+    margin-bottom: 30px;
+    line-height: 1.38;
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+    border-radius: 10px;
+    li {
+      list-style-type: disc;
+      margin-left: 18px;
+    }
+  }
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp)  {
+  .dialog {
+    min-width: var(--yoroi-comp-dialog-min-width-lg);
+    max-width: var(--yoroi-comp-dialog-min-width-lg);
+    font-weight: 400;
+    
+    .walletPassword {
+      margin-top: 0;
+    }
+  }
+}

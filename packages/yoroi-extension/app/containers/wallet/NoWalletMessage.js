@@ -1,0 +1,35 @@
+// @flow
+import type { Node } from 'react';
+import { Component } from 'react';
+import { defineMessages, IntlContext } from 'react-intl';
+import FullscreenMessage from '../../components/wallet/layouts/FullscreenMessage';
+import { observer } from 'mobx-react';
+
+export const messages: * = defineMessages({
+  title: {
+    id: 'wallet.nowallet.title',
+    defaultMessage: '!!!No wallet selected.',
+  },
+  subtitle: {
+    id: 'wallet.nowallet.subtitle',
+    defaultMessage: '!!!Please select a wallet from the dropdown menu on the top right.',
+  },
+});
+
+type Props = {|
+|};
+
+@observer
+export default class NoWalletMessage extends Component<Props> {
+  static contextType:any = IntlContext;
+  render(): Node {
+    const intl = this.context;
+
+    return (
+      <FullscreenMessage
+        title={intl.formatMessage(messages.title)}
+        subtitle={intl.formatMessage(messages.subtitle)}
+      />
+    );
+  }
+}

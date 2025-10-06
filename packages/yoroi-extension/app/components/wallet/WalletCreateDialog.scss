@@ -1,0 +1,57 @@
+@import '../../themes/mixins/loading-spinner';
+
+.component {
+  .walletPassword {
+    .walletPasswordFields {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      & > div {
+        width: 350px;
+      }
+    }
+  }
+  .isSubmitting {
+    @include loading-spinner('../../assets/images/spinner-light.svg');
+  }
+}
+:global(.YoroiClassic) .component {
+  .walletPassword {
+    .walletPasswordFields {
+      &.show {
+        overflow: visible;
+      }
+
+      & > div {
+        margin-top: 0;
+      }
+
+      // Seems like this is the same class name as parent, but it's different.
+      // This class will apply to the child Input tag.
+      // Unfortunately for fixing this problem we also need to carefully fix basic E2E cases, as its used there.
+      :global .walletPassword {
+        margin-right: 25px;
+      }
+    }
+  }
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+ .component {
+   .walletPassword {
+     .walletPasswordFields {
+       &.show {
+         max-height: 600px;
+        }
+        
+        & > div {
+          width: 100%;
+        }
+      }
+    }
+    
+    :global(.Dialog_actions) {
+      margin-top: 10px;
+    }
+  }
+} 

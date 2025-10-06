@@ -1,0 +1,115 @@
+@import '../../themes/mixins/loading-spinner';
+@import '../../themes/mixins/error-message';
+
+.component {
+  .walletPassword {
+    .walletPasswordFields {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      & > div {
+        margin-top: 30px;
+        width: 350px;
+      }
+    }
+  }
+
+  .error {
+    @include error-message;
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .isSubmitting {
+    @include loading-spinner('../../assets/images/spinner-light.svg');
+  }
+}
+
+:global(.YoroiClassic) {
+  .component {
+    .walletName {
+      margin-bottom: 10px;
+    }
+
+    .walletPassword {
+      .walletPasswordFields {
+        &.show {
+          max-height: 250px;
+          opacity: 1;
+          overflow: visible;
+        }
+
+        & > div {
+          margin-top: 0;
+          width: 350px;
+        }
+
+        // Seems like this is the same class name as parent, but it's different.
+        // This class will apply to the child Input tag.
+        // Unfortunately for fixing this problem we also need to carefully fix basic E2E cases, as its used there.
+        :global .walletPassword {
+          margin-right: 25px;
+        }
+      }
+
+      .paperPassword {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+  .component {
+    .walletName {
+      margin-bottom: 0;
+    }
+
+    .walletPassword {
+      .walletPasswordFields {
+        &.show {
+          max-height: 600px;
+          opacity: 1;
+        }
+
+        & > div {
+          margin-top: 0;
+          width: 100%;
+        }
+      }
+    }
+
+    :global(.Dialog_actions) {
+      margin-top: 10px;
+    }
+  }
+}
+
+
+
+:global(.YoroiRevamp) {
+  .component {
+    .walletName {
+      margin-bottom: 0;
+    }
+
+    .walletPassword {
+      .walletPasswordFields {
+        &.show {
+          max-height: 600px;
+          opacity: 1;
+        }
+
+        & > div {
+          margin-top: 0;
+          width: 100%;
+        }
+      }
+    }
+
+    :global(.Dialog_actions) {
+      margin-top: 10px;
+    }
+  }
+}

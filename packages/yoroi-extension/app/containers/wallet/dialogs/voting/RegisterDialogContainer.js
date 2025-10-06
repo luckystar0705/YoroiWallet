@@ -1,0 +1,47 @@
+// @flow
+import type { Node } from 'react';
+import type { StepsList } from '../../../../components/wallet/voting/types';
+import { Component } from 'react';
+import { observer } from 'mobx-react';
+import { IntlContext } from 'react-intl';
+import RegisterDialog from '../../../../components/wallet/voting/RegisterDialog';
+import type { StoresProps } from '../../../../stores';
+
+type Props = {|
+  +stepsList: StepsList,
+  +submit: void => PossiblyAsync<void>,
+  +cancel: void => void,
+  +goBack: void => void,
+  +onError: Error => void,
+|};
+
+type AllProps = {| ...Props, ...StoresProps |};
+
+@observer
+export default class RegisterDialogContainer extends Component<AllProps> {
+  static contextType:any = IntlContext;
+  render(): Node {
+    const { submit, cancel, onError, stepsList, stores, goBack } = this.props;
+    const votingStore = this.props.stores.substores.ada.votingStore;
+
+    return (
+      <RegisterDialog
+        stepsList={stepsList}
+        progressInfo={votingStore.progressInfo}
+        submit={async (walletPassword: string) => {
+          try {
+            await stores.substores.ada.votingStore.createTransaction(walletPassword);
+            await submit();
+          } catch (error) {
+            onError(error);
+          }
+        }}
+        isProcessing={votingStore.isActionProcessing}
+        cancel={cancel}
+        goBack={goBack}
+        error={votingStore.createVotingRegTx.error || votingStore.error}
+      />
+    );
+  }
+
+}

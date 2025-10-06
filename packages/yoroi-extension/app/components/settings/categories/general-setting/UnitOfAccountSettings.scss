@@ -1,0 +1,31 @@
+@import '../../../../themes/mixins/error-message';
+
+.component {
+  .text {
+    color: var(--yoroi-support-settings-text);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .text {
+    margin-bottom: 2px;
+  }
+
+  .optionRow {
+    display: flex;
+    .optionLabel {
+      margin-left: 8px;
+    }
+  }
+}
+
+.error {
+  @include error-message;
+  text-align: center;
+}
+
+:global(.YoroiModern) .optionSmallNative {
+  font-size: 14px;
+  color: var(--yoroi-palette-secondary-200);
+}

@@ -1,0 +1,69 @@
+@import '../../themes/mixins/loading-spinner';
+
+.accordionSection {
+  display: flex;
+  flex-direction: column;
+
+  .accordionTitle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--yoroi-palette-gray-600);
+    padding: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    svg {
+      transition: transform 300ms;
+    }
+
+    &.revamp {
+      // Not opened
+      .arrowIcon svg {
+        transform: rotate(180deg);
+      }
+
+      // Opened
+      &.activeArrow {
+        .arrowIcon svg {
+          transform: rotate(0deg);
+        }
+      }
+    }
+
+    &.activeArrow {
+      .arrowIcon svg {
+        transform: rotate(180deg);
+      }
+    }
+
+    &.activeHead {
+      font-weight: 500;
+      color: var(--yoroi-palette-secondary-300);
+    }
+    .arrowDownIcon {
+      display: flex;
+    }
+  }
+  .accordionContent {
+    overflow: hidden;
+    max-height: 0;
+    will-change: height;
+    transition: max-height 0.3s linear;
+    &.showActiveContent {
+      max-height: 300px;
+      transition: max-height 300ms linear;
+    }
+  }
+}
+.spinner {
+  position: relative;
+  margin-right: 124px;
+  height: 40px;
+  @include loading-spinner('../../assets/images/spinner-dark.svg', 14);
+}

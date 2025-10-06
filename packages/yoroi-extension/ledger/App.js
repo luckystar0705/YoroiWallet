@@ -1,0 +1,64 @@
+// @flow //
+import React, { Suspense, lazy } from 'react';
+import type { Node } from 'react';
+import { observer } from 'mobx-react';
+import { IntlProvider } from 'react-intl';
+import RootStore from './stores';
+
+import LoadingSpinner from './components/widgets/LoadingSpinner';
+
+import { Navigate, HashRouter, Routes, Route } from 'react-router';
+
+import { translations } from './i18n/translations';
+import { DEFAULT_LOCALE } from './const';
+import styleVariables from './cmn-style/style-variables';
+
+// https://reactjs.org/docs/code-splitting.html#reactlazy
+const ConnectPage = lazy(() => import('./containers/ConnectPage'));
+const StyleVariableLoader = lazy(() => import('./containers/StyleVariableLoader'));
+
+type Props = {|
+  rootStore: RootStore
+|}
+
+@observer
+export default class App extends React.Component<Props> {
+  // Yoroi styled loading spinner
+  loadingSpinner: ?LoadingSpinner;
+
+  render(): Node {
+    const { profileStore } = this.props.rootStore;
+
+    const locale = profileStore.currentLocale;
+
+    // Merged english messages with selected by user locale messages
+    // In this case all english data would be overridden to user selected locale, but untranslated
+    // (missed in object keys) just stay in english
+    const mergedMessages = {
+      ...translations[DEFAULT_LOCALE],
+      ...translations[locale]
+    };
+
+    const loadingSpinner = (
+      <LoadingSpinner
+        ref={(component) => { this.loadingSpinner = component; }}
+        showText
+      />
+    );
+
+    const component = (
+      <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
+        <Suspense fallback={loadingSpinner}>
+          <StyleVariableLoader variables={styleVariables} />
+          <HashRouter basename={process.env.PUBLIC_URL}>
+            <Routes>
+              <Route path="/" element={<ConnectPage rootStore={this.props.rootStore} />}/>
+            </Routes>
+          </HashRouter>
+        </Suspense>
+      </IntlProvider>
+    );
+
+    return component;
+  }
+}

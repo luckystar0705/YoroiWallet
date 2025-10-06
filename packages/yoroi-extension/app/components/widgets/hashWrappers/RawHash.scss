@@ -1,0 +1,15 @@
+.hash {
+  word-break: break-all;
+  font-family: 'RobotoMono';
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 22px;
+}
+
+.lightColor {
+  color: var(--yoroi-widgets-hash-light);
+}
+
+.darkColor {
+  color: var(--yoroi-widgets-hash-dark);
+}

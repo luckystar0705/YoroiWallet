@@ -1,0 +1,79 @@
+// @flow
+import { Component } from 'react';
+import type { Node } from 'react';
+import type { MessageDescriptor } from 'react-intl';
+import { IntlContext } from 'react-intl';
+import { observer } from 'mobx-react';
+import classNames from 'classnames';
+import styles from './SideBarCategoryRevamp.scss';
+import { Box, styled, Typography } from '@mui/material';
+
+type Props = {|
+  +icon: string,
+  +active: boolean,
+  +route: string,
+  +onClick: void => void,
+  +label: ?MessageDescriptor,
+|};
+
+const ItemWrapper = styled(Box)(({ theme, active }) => ({
+  cursor: 'pointer',
+  background: active !== 'false' && theme.palette.ds.special_web_bg_sidebar,
+  paddingTop: '8px',
+  paddingBottom: '8px',
+  width: '100%',
+}));
+
+@observer
+export default class SideBarCategoryRevamp extends Component<Props> {
+  static contextType:any = IntlContext;
+  render(): Node {
+    const intl = this.context;
+
+    const { icon, active, onClick, label, route } = this.props;
+
+    const componentStyles = classNames([styles.component, active ? styles.active : null]);
+
+    const SvgElem = icon;
+    const isInternalLink = route.startsWith('/') || route.startsWith('#');
+
+    return isInternalLink ? (
+      <ItemWrapper
+        type="button"
+        className={componentStyles}
+        // $FlowExpectedError[incompatible-use]
+        id={label.id}
+        onClick={onClick}
+        disabled={active}
+        active={active.toString()}
+      >
+        <span className={styles.icon}>
+          <SvgElem />
+        </span>
+        {label ? (
+          <Typography component="div" variant="caption2" className={styles.label}>
+            {intl.formatMessage(label)}
+          </Typography>
+        ) : null}
+      </ItemWrapper>
+    ) : (
+      <a
+        href={route}
+        className={componentStyles}
+        // $FlowExpectedError[incompatible-use]
+        id={label.id}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className={styles.icon}>
+          <SvgElem />
+        </span>
+        {label ? (
+          <Typography component="div" variant="caption2">
+            {intl.formatMessage(label)}
+          </Typography>
+        ) : null}
+      </a>
+    );
+  }
+}

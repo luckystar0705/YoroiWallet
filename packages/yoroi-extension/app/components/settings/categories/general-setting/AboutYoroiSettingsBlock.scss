@@ -1,0 +1,28 @@
+.component {
+  font-weight: 400;
+  color: var(--yoroi-support-settings-text);
+
+  .aboutLine {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+.yoroiLogo {
+  & > svg {
+    & > path {
+      fill: #2249be;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .socialMediaLinkText {
+    display: none;
+  }
+}
+
+.aboutSocial {
+  margin-top: 40px;
+  margin-left: -13px;
+}

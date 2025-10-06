@@ -1,0 +1,144 @@
+$leftBlockWidth: 72px;
+$rightBlockWidth: $leftBlockWidth;
+
+@import '../transactions/categoryData';
+
+.component {
+  min-width: fit-content;
+  box-shadow: 0 2px 4px 0 rgba(56, 57, 61, 0.2);
+
+  .content {
+    margin-left: 24px;
+    margin-right: 21px;
+
+    :global {
+      .BorderedBox_component {
+        padding-left: 0;
+        background: none;
+        border: none;
+      }
+    }
+
+    .leftBlock {
+      display: none;
+      float: left;
+      padding-top: 20px;
+      width: $leftBlockWidth;
+    }
+
+    .leftBlock,
+    .rightBlock {
+      padding-top: 33px;
+    }
+
+    .rightBlock {
+      float: right;
+      width: $rightBlockWidth;
+
+      .exportTxToFileSvg {
+        pointer-events: auto;
+        float: right;
+      }
+
+      .exportTxToFileSvg:hover {
+        cursor: pointer;
+        circle {
+          fill: var(--yoroi-palette-gray-50);
+        }
+      }
+    }
+
+    .middleBlock {
+      border: none;
+      text-align: left;
+      display: inline-block;
+      min-height: 62px; // make space to avoid the UI growing in size when loading is done
+      width: calc(100% - #{$leftBlockWidth + $rightBlockWidth});
+
+      :global {
+        .BorderedBox_component {
+          background: none;
+          border: none;
+        }
+      }
+    }
+
+    .pendingSection {
+      margin-top: 7px;
+
+      .pendingConfirmation {
+        font-size: 14px;
+        line-height: 21px;
+        font-weight: 500;
+        color: var(--yoroi-palette-gray-400);
+        .amount {
+          color: var(--yoroi-palette-gray-900);
+          font-weight: 500;
+          margin-right: 8px;
+
+          .afterDecimal {
+            font-weight: 400;
+            font-size: 10px;
+          }
+        }
+        & > .currencySymbolSmallest {
+          display: inline-block;
+          margin-left: 8px;
+          & > svg {
+            height: 12px;
+            width: 9px;
+            & > g {
+              stroke: var(--yoroi-palette-gray-900);
+            }
+          }
+        }
+      }
+    }
+
+    .numberOfTransactions {
+      font-size: 18px;
+      line-height: 22px;
+      font-weight: 500;
+      color: var(--yoroi-palette-gray-400);
+      span {
+        margin-left: 8px;
+        color: var(--yoroi-palette-gray-900);
+      }
+    }
+
+    .sectionList {
+      display: flex;
+      justify-content: space-between;
+      margin-right: 40px;
+      margin-bottom: 10px;
+
+      .sectionTitle {
+        color: var(--yoroi-palette-gray-600);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+  }
+}
+
+.time {
+  min-width: $time-min-width;
+  text-align: $time-align;
+}
+.type {
+  min-width: $type-min-width;
+  text-align: $type-align;
+}
+.status {
+  width: $status-width;
+  text-align: $status-align;
+}
+.fee {
+  min-width: $min-fee-width;
+  text-align: $fee-align;
+}
+.amount {
+  min-width: $min-amount-width;
+  text-align: $amount-align;
+}

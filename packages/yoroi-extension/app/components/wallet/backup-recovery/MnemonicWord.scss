@@ -1,0 +1,49 @@
+.component {
+  background-color: var(--yoroi-mnemonic-background-color)!important;
+  font-weight: 400!important;
+  color: var(--yoroi-palette-gray-900)!important;
+
+  &.disabled {
+    cursor: default;
+  }
+
+  &:not(.disabled) {
+    &:active {
+      cursor: pointer;
+      &:hover {
+        background-color: var(--yoroi-mnemonic-background-color-hover);
+      }
+    }
+  }
+}
+
+:global(.YoroiClassic) {
+  .component {
+    font-size: 15px;
+    margin: 5px 0;
+    height: 40px;
+    padding: 10px 20px;
+    width: 140px;
+
+    &.disabled {
+      opacity: 0.3;
+    }
+  }
+
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+  .component {
+    font-size: 14px;
+    margin: 5px 10px 5px 0;
+    height: 30px;
+    padding: 3px 13px;
+    width: auto;
+    text-transform: none;
+
+    &.disabled {
+      opacity: 0;
+    }
+  }
+
+}

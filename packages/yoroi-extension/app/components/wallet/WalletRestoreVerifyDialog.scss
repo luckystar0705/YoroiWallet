@@ -1,0 +1,49 @@
+@import '../../themes/mixins/loading-spinner';
+@import '../../themes/mixins/error-message';
+
+.dialog {
+  font-weight: 300;
+
+  li::before {
+    content: '●';
+    font-size: 0.8em;
+    color: var(--yoroi-palette-gray-400);
+  }
+  li {
+    display: list-item;
+
+    span {
+      font-size: 13px;
+      margin-left: 0.2em;
+    }
+  }
+}
+
+.smallTopMargin {
+  margin-top: 7px;
+}
+
+.addressLabel {
+  font-weight: 400;
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+  text-align: left;
+}
+
+.postCopyMargin {
+  margin-bottom: 6px;
+}
+
+.error {
+  @include error-message;
+  margin-top: 30px;
+  text-align: center;
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+  // Refer: https://github.com/Emurgo/yoroi-frontend/pull/1052
+  .dialog {
+    min-width: 740px;
+    max-width: 740px;
+  }
+}

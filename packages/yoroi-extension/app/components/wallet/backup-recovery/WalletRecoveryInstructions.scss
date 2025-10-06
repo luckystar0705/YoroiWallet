@@ -1,0 +1,27 @@
+.component {
+  line-height: 22px;
+  margin-bottom: 10px;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+:global(.YoroiClassic) {
+  .component {
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--yoroi-instructions-text-color);
+    text-align: center;
+  }
+}
+
+:global(.YoroiModern), :global(.YoroiRevamp) {
+  .component {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--yoroi-palette-gray-900);
+    text-align: left;
+    letter-spacing: 0;
+  }
+}

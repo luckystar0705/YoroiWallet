@@ -1,0 +1,149 @@
+// @flow
+import Fade from '@mui/material/Fade';
+import { Dialog, Typography, Button, Stack, Link, IconButton } from '@mui/material';
+import React from 'react';
+import type { Node, ComponentType } from 'react';
+import { Box } from '@mui/system';
+import type { $npm$ReactIntl$IntlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
+import globalMessages from '../../i18n/global-messages';
+import { observer } from 'mobx-react';
+import { ReactComponent as CrossIcon } from '../../assets/images/revamp/icons/cross.inline.svg';
+
+export const messages: Object = defineMessages({
+  dialogTitle: {
+    id: 'wallet.infoDialog.title',
+    defaultMessage: '!!!Tips',
+  },
+  learnMore: {
+    id: 'wallet.infoDialog.learnMore',
+    defaultMessage: '!!!Learn more on Yoroi Zendesk',
+  },
+});
+
+type Props = {|
+  open: boolean,
+  children: Node,
+  onClose(): void,
+|};
+
+type Intl = {|
+  intl: $npm$ReactIntl$IntlShape,
+|};
+
+const Transition = React.forwardRef((props, ref) => {
+  return <Fade timeout={500} ref={ref} {...props} />;
+});
+
+function InfoDialog(props: Props & Intl): Node {
+  const { open, onClose, children, intl } = props;
+
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      TransitionComponent={Transition}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'ds.special_web_overlay',
+        '& .MuiPaper-root': {
+          maxWidth: 'unset',
+          backgroundImage: 'none',
+          backgroundColor: 'ds.bg_color_contrast_high',
+        },
+        '& .MuiDialog-paper': {
+          backgroundColor: 'ds.bg_color_contrast_high',
+        },
+        '& .MuiBackdrop-root': {
+          backgroundColor: 'transparent',
+        },
+        '& .MuiModal-backdrop': {
+          backgroundColor: 'transparent',
+        },
+      }}
+      id="infoDialog"
+    >
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={theme => ({
+          position: 'absolute',
+          right: 16,
+          top: 16,
+          '& svg': {
+            '& path': {
+              fill: theme.palette.ds.el_gray_medium,
+            },
+          },
+        })}
+      >
+        <CrossIcon />
+      </IconButton>
+      <Box
+        sx={{
+          background: 'ds.bg_color_max',
+          width: '648px',
+          borderRadius: '8px',
+          padding: '24px',
+          display: 'flex',
+          alignitems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography
+          component="div"
+          color="ds.text_gray_medium"
+          sx={{
+            display: 'block',
+            fontSize: '16px',
+            fontWeight: '500',
+            lineHeight: '22px',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            mb: '25px',
+          }}
+        >
+          {intl.formatMessage(messages.dialogTitle)}
+        </Typography>
+        <Box
+          sx={{
+            flex: 1,
+          }}
+        >
+          {children}
+        </Box>
+        <Link
+          href="https://emurgohelpdesk.zendesk.com/hc/en-us/categories/4412619927695-Yoroi-"
+          target="_blank"
+          rel="noreferrer noopener"
+          sx={{
+            display: 'block',
+            textAlign: 'center',
+            py: '24px',
+          }}
+        >
+          {intl.formatMessage(messages.learnMore)}
+        </Link>
+        <Stack alignItems="center" justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            disableRipple={false}
+            onClick={onClose}
+            sx={{
+              width: '100%',
+            }}
+            id="infoDialogContinueButton"
+          >
+            {intl.formatMessage(globalMessages.continue)}
+          </Button>
+        </Stack>
+      </Box>
+    </Dialog>
+  );
+}
+
+export default (injectIntl(observer(InfoDialog)): ComponentType<Props>);
